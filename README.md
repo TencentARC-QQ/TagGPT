@@ -58,6 +58,6 @@ python main.py --data_path ../data/examples.csv --tag_path ../data/final_tags.cs
 We appreciate the open source of the following projects: Kuaishou, Hugging Face, LangChain. 
 
 ## 📧 Contact Information
-For help or issues using the Visual ChatGPT, please submit a GitHub issue.
+For help or issues using the TagGPT, please submit a GitHub issue.
 
 For other communications, please contact Chen Li [palchenli@tencent.com](palchenli@tencent.com) or Yixiao Ge [yixiaoge@tencent.com](yixiaoge@tencent.com).
