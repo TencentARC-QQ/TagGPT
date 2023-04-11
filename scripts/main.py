@@ -404,23 +404,22 @@ def generative_tagger(data_path, tag_path, api_key):
 
             scores = np.dot(candidate_tags_embed, tags_embed.T)
 
-            final_ans = []
+            ans = []
             for i in range(scores.shape[0]):
                 for j in range(scores.shape[1]):
                     score = scores[i][j] / (candidate_tags_dis[i] * tags_dis[j])
                     if score > 0.9:
-                        final_ans.append(tags[j])
+                        ans.append(tags[j])
 
-            final_ans = Counter(final_ans)
-            final_ans = sorted(final_ans.items(), key=lambda x: x[1], reverse=True)
+            ans = Counter(ans)
+            ans = sorted(ans.items(), key=lambda x: x[1], reverse=True)
 
-            print(final_ans)
+            final_res.append(ans)
         except:
             print("api error")
 
+    return final_res
 
-
-    return 0
 
 class Data:
     def __init__(self, path):
