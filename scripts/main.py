@@ -196,7 +196,7 @@ def selective_tagger(data_path, tag_path):
 
     for ind, row in enumerate(tqdm.tqdm(df_exp.iterrows())):
         inputs = []
-        print(row[0])
+        print(row[1])
 
 
 
