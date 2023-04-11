@@ -4,6 +4,8 @@ import tqdm
 import numpy as np
 import argparse
 import random
+import sys
+import openai
 
 from langchain import OpenAI, ConversationChain
 from langchain.prompts import PromptTemplate
@@ -63,6 +65,45 @@ def format_data(data, preference):
     f.close()
 
 
+def tag_gen(data_path, openai_key, gen_feq):
+    openai.api_key = openai_key
+
+    sentences = []
+    f = open(data_path, 'r')
+    for line in f.readlines():
+        sentences.append(line.strip())
+    f.close()
+
+    sentences = sentences[:30]
+
+    num = 0
+    final_res = []
+    for sentence in tqdm.tqdm(sentences):
+        try:
+            completion = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": sentence}],
+                temperature=1.5,
+                n=gen_feq
+            )
+
+            res = str(num) + "||"
+            for j in range(gen_feq):
+                ans = completion.choices[j].message["content"].strip()
+                ans = ans.replace("\n", "")
+                res += str(ans) + "||"
+
+            final_res.append(res)
+        except:
+            continue
+
+        if len(final_res) == 10:
+            f = open("../data/tag_gen.txt", 'a')
+            f.write("\n".join(final_res))
+            f.close()
+            final_res = []
+
+
 class Data:
     def __init__(self, path):
         self.path = path
@@ -79,18 +120,22 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_path", type=str, help="data path")
     parser.add_argument("--func", type=str, help="func")
-    parser.add_argument("--gen_feq", type=int, help="gen_feq")
+    parser.add_argument("--openai_key", type=str, help="openai key")
+    parser.add_argument("--gen_feq", type=int, help="gen_feq", default=5)
 
     paras = parser.parse_args()
 
     data_path = paras.data_path
     func = paras.func
     gen_feq = paras.gen_feq
+    openai_key = paras.openai_key
 
     if func == "data_format":
         format_data(data=Data(path=data_path).dataframe, preference="兴趣标签")
         print("Data formatting completed")
-
+    elif func == "tag_gen":
+        tag_gen(data_path, openai_key, gen_feq)
+        print("Tag generation completed")
 
 
 
