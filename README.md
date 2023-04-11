@@ -53,3 +53,11 @@ python main.py --data_path ../data/examples.csv --tag_path ../data/final_tags.cs
 ```bash
 python main.py --data_path ../data/examples.csv --tag_path ../data/final_tags.csv --func generative_tagger --openai_key "put your own key here"
 ```
+
+## 🤗 Acknowledgements
+We appreciate the open source of the following projects: Kuaishou, Hugging Face, LangChain. 
+
+## 📧 Contact Information
+For help or issues using the Visual ChatGPT, please submit a GitHub issue.
+
+For other communications, please contact Chen Li [palchenli@tencent.com](palchenli@tencent.com) or Yixiao Ge [yixiaoge@tencent.com](yixiaoge@tencent.com).
