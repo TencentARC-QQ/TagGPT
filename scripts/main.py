@@ -239,17 +239,17 @@ def format_prompt_selective(data, candidate_tags):
     ]
 
     prompt = PromptTemplate(
-        input_variables=["preference", "caption", "ocr_cover", "asr_pure", "category_name", "example", "candidate_tags"],
+        input_variables=["preference", "caption", "ocr", "asr", "category_name", "example", "candidate_tags"],
         template="你是一个视频的{preference}生成机器人，根据输入的视频标题、类别、ocr、asr从给定的标签集推理出合理的\"{preference}\"，"
                  "以多个多于两字的标签形式进行表达，以顿号隔开。{example}那么，给定一个新的视频，它的\"标题\"为\"{caption}\"，\"类别\"为"
-                 "\"{category_name}\"，\"ocr\"为\"{ocr_cover}\"，\"asr\"为\"{asr_pure}\"，请从标签集合\"{candidate_tags"
+                 "\"{category_name}\"，\"ocr\"为\"{ocr}\"，\"asr\"为\"{asr}\"，请从标签集合\"{candidate_tags"
                  "}\"中推断出该视频的\"{preference}\"："
     )
 
     example = examples[random.randint(0, 4)]
     text = prompt.format(preference=preference, caption=data['caption'],
-                         category_name=data['category_name'], ocr_cover=data['ocr_cover'],
-                         asr_pure=data['asr_pure'], example=example, candidate_tags="、".join(candidate_tags))
+                         category_name=data['category_name'], ocr_cover=data['ocr'],
+                         asr_pure=data['asr'], example=example, candidate_tags="、".join(candidate_tags))
 
     return text
 
