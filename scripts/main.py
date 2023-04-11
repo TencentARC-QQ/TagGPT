@@ -161,13 +161,38 @@ def posterior_process(data_path):
     f.close()
 
 
+def get_tag_embed(encoder, tags):
+    tags_embed = encoder.encode(tags)
+    tags_dis = [np.sqrt(np.dot(_, _.T)) for _ in tags_embed]
+
+    with open('../data/tags_embed.npy', 'wb') as f:
+        np.save(f, tags_embed)
+
+    with open('../data/tags_dis.npy', 'wb') as f:
+        np.save(f, tags_dis)
+
+    return tags_embed, tags_dis
+
+
+def load_tag_embed():
+    tags_embed = np.load('../data/tags_embed.npy')
+    tags_dis = np.load('../data/tags_dis.npy')
+
+    return tags_embed, tags_dis
+
+
 def selective_tagger(data_path, tag_path):
     df_exp = pd.read_csv(data_path, sep='\|\|', on_bad_lines='skip')
     df_tag = pd.read_csv(tag_path, sep='\|\|', on_bad_lines='skip')
-    tags = list(df_tag)
+    df_tag.columns = ['tag', 'contain_tags']
+    tags = list(df_tag['tag'])
 
-    print(df_exp)
-    print(tags)
+    encoder = SentenceTransformer('hfl/chinese-roberta-wwm-ext-large')
+    if os.path.exists('../data/tags_dis.npy') and os.path.exists('../data/tags_embed.npy'):
+        tags_embed, tags_dis = load_tag_embed()
+    else:
+        tags_embed, tags_dis = get_tag_embed(encoder, tags)
+
 
 
 
