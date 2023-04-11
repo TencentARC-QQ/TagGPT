@@ -1,0 +1,8 @@
+pandas==2.0.0
+tqdm==4.65.0
+numpy==1.24.2
+openai==0.27.2
+langchain==0.0.112
+sentence_transformers==2.2.2
+torch==2.0.0
+transformers==4.27.4
