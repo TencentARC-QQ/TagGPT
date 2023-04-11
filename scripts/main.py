@@ -147,7 +147,7 @@ def posterior_process(data_path):
             for j in range(i, len(tags)):
                 if i != j:
                     score[j - i] = score[j - i] / (tags_dis[i] * tags_dis[j])
-                    if score[j - i] > 0.9:
+                    if score[j - i] > 0.95:
                         mark[j] = 1
                         include[i].append(tags[j])
 
@@ -159,6 +159,16 @@ def posterior_process(data_path):
     f = open('../data/final_tags.csv', 'w')
     f.write(out)
     f.close()
+
+
+def selective_tagger(data_path, tag_path):
+    df_exp = pd.read_csv(data_path, sep='\|\|', on_bad_lines='skip')
+    df_tag = pd.read_csv(tag_path, sep='\|\|', on_bad_lines='skip')
+    tags = list(df_tag)
+
+    print(df_exp)
+    print(tags)
+
 
 
 class Data:
@@ -175,14 +185,16 @@ class Data:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_path", type=str, help="data path")
-    parser.add_argument("--func", type=str, help="func")
-    parser.add_argument("--openai_key", type=str, help="openai key")
+    parser.add_argument("--data_path", type=str, help="data path", default="")
+    parser.add_argument("--tag_path", type=str, help="tag path", default="")
+    parser.add_argument("--func", type=str, help="func", default="")
+    parser.add_argument("--openai_key", type=str, help="openai key", default="")
     parser.add_argument("--gen_feq", type=int, help="gen_feq", default=5)
 
     paras = parser.parse_args()
 
     data_path = paras.data_path
+    tag_path = paras.tag_path
     func = paras.func
     gen_feq = paras.gen_feq
     openai_key = paras.openai_key
@@ -195,7 +207,11 @@ def main():
         print("Tag generation completed")
     elif func == "posterior_process":
         posterior_process(data_path)
-        print("Posterior process completed")
+        print("Posterior processing completed")
+    elif func == "selective tagger":
+        selective_tagger(data_path, tag_path)
+        print("Tagging completed")
+
 
 
 
