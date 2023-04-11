@@ -401,6 +401,7 @@ def generative_tagger(data_path, tag_path, api_key):
         except:
             print("api error")
 
+    return 0
 
 class Data:
     def __init__(self, path):
