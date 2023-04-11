@@ -74,8 +74,6 @@ def tag_gen(data_path, openai_key, gen_feq):
         sentences.append(line.strip())
     f.close()
 
-    sentences = sentences[:30]
-
     num = 0
     final_res = []
     for sentence in tqdm.tqdm(sentences):
@@ -97,11 +95,45 @@ def tag_gen(data_path, openai_key, gen_feq):
         except:
             continue
 
-        if len(final_res) == 10:
+        num += 1
+        if len(final_res) == 100:
             f = open("../data/tag_gen.txt", 'a')
             f.write("\n".join(final_res))
             f.close()
             final_res = []
+
+
+def posterior_process(data_path):
+    f = open(data_path, 'r')
+    out = ""
+    tag_all = []
+    for line in f.readlines():
+        line = line.replace(".", "")
+        line = line.replace("。", "")
+        line = line.replace(",", "、")
+        line = line.replace("，", "、")
+        line = line.replace("'", "")
+        line = line.replace("\n", "")
+        line = line.replace("\"", "")
+        tmp = line.strip().split('||')
+        out += str(tmp) + "\n"
+        for t in tmp:
+            if '、' in t:
+                tags = t.split('、')
+                tag_all += tags
+    f.close()
+
+    ans = Counter(tag_all)
+    ans = sorted(ans.items(), key=lambda x: x[1], reverse=True)
+
+    tags = []
+    for tmp in ans:
+        if tmp[1] > 4:
+            tags.append(tmp[0].replace(' ', ''))
+
+    f = open('../data/tags.txt', 'w')
+    f.write('\n'.join(tags))
+    f.close()
 
 
 class Data:
@@ -136,6 +168,10 @@ def main():
     elif func == "tag_gen":
         tag_gen(data_path, openai_key, gen_feq)
         print("Tag generation completed")
+    elif func == "posterior_process":
+        posterior_process(data_path)
+        print("Posterior process completed")
+
 
 
 
