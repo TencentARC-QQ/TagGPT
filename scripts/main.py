@@ -273,6 +273,7 @@ def selective_tagger(data_path, tag_path, api_key):
 
     for ind, row in enumerate(tqdm.tqdm(df_exp.iterrows())):
         inputs = [row[1]['caption'], row[1]['category_name'], row[1]['ocr'], row[1]['asr']]
+        print(inputs)
         input_embed = encoder.encode(inputs)
         input_dis = [np.sqrt(np.dot(_, _.T)) for _ in input_embed]
 
