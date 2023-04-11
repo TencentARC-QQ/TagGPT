@@ -188,11 +188,15 @@ def selective_tagger(data_path, tag_path):
     tags = list(df_tag['tag'])
 
     encoder = SentenceTransformer('hfl/chinese-roberta-wwm-ext-large')
-    if os.path.exists('../data/tags_dis.npy') and os.path.exists('../data/tags_embed.npy'):
-        tags_embed, tags_dis = load_tag_embed()
-    else:
-        tags_embed, tags_dis = get_tag_embed(encoder, tags)
+    # if os.path.exists('../data/tags_dis.npy') and os.path.exists('../data/tags_embed.npy'):
+    #     tags_embed, tags_dis = load_tag_embed()
+    # else:
+    #     print("Generating tag embedding")
+    #     tags_embed, tags_dis = get_tag_embed(encoder, tags)
 
+    for ind, row in enumerate(tqdm.tqdm(df_exp.iterrows())):
+        inputs = []
+        print(row[0])
 
 
 
