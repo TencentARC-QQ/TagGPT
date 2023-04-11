@@ -247,7 +247,7 @@ def format_prompt_selective(data, candidate_tags):
     )
 
     example = examples[random.randint(0, 4)]
-    print(data)
+    print(data, type(data))
     text = prompt.format(preference=preference, caption=data['caption'],
                          category_name=data['category_name'], ocr_cover=data['ocr'],
                          asr_pure=data['asr'], example=example, candidate_tags="、".join(candidate_tags))
