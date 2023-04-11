@@ -208,7 +208,7 @@ def main():
     elif func == "posterior_process":
         posterior_process(data_path)
         print("Posterior processing completed")
-    elif func == "selective tagger":
+    elif func == "selective_tagger":
         selective_tagger(data_path, tag_path)
         print("Tagging completed")
 
