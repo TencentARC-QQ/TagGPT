@@ -247,10 +247,11 @@ def format_prompt_selective(data, candidate_tags):
     )
 
     example = examples[random.randint(0, 4)]
-    data = data.to_dict()
-    text = prompt.format(preference=preference, caption=data['caption'],
-                         category_name=data['category_name'], ocr_cover=data['ocr'],
-                         asr_pure=data['asr'], example=example, candidate_tags="、".join(candidate_tags))
+    data_d = data.to_dict()
+    print(data_d)
+    text = prompt.format(preference=preference, caption=data_d['caption'],
+                         category_name=data_d['category_name'], ocr_cover=data_d['ocr'],
+                         asr_pure=data_d['asr'], example=example, candidate_tags="、".join(candidate_tags))
 
     return text
 
@@ -274,7 +275,6 @@ def selective_tagger(data_path, tag_path, api_key):
 
     for ind, row in enumerate(tqdm.tqdm(df_exp.iterrows())):
         inputs = [row[1]['caption'], row[1]['category_name'], row[1]['ocr'], row[1]['asr']]
-        print(inputs)
         input_embed = encoder.encode(inputs)
         input_dis = [np.sqrt(np.dot(_, _.T)) for _ in input_embed]
 
