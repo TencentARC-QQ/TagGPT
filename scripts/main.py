@@ -16,10 +16,10 @@ class Data:
         self.dataframe = self.data_loader()
 
     def data_loader(self):
-        df = pd.read_csv(self.path, sep=';', usecols=['caption', 'ocr_cover', 'asr_pure', 'category_name'],
-                         on_bad_lines='skip')
+        df = pd.read_feather(self.path)
+        df_f = df[['item_id', 'caption', 'ocr_cover', 'asr_pure', 'category_name']]
 
-        return df
+        return df_f
 
 
 def main():
@@ -33,6 +33,10 @@ def main():
     data_path = paras.data_path
     func = paras.func
     gen_feq = paras.gen_feq
+
+    if func == "data_format":
+        data = Data(path=data_path).dataframe
+        print(data)
 
 
 
