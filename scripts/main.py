@@ -128,7 +128,7 @@ def posterior_process(data_path):
 
     tags = []
     for tmp in ans:
-        if tmp[1] > 0:
+        if tmp[1] > 2:
             tags.append(tmp[0].replace(' ', ''))
 
     f = open('../data/tags.txt', 'w')
@@ -147,7 +147,7 @@ def posterior_process(data_path):
             for j in range(i, len(tags)):
                 if i != j:
                     score[j - i] = score[j - i] / (tags_dis[i] * tags_dis[j])
-                    if score[j - i] > 0.8:
+                    if score[j - i] > 0.9:
                         mark[j] = 1
                         include[i].append(tags[j])
 
