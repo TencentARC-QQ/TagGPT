@@ -371,6 +371,7 @@ def generative_tagger(data_path, tag_path, api_key):
                  "\"："
     )
 
+    final_res = []
     for ind, row in enumerate(tqdm.tqdm(df_exp.iterrows())):
         data = row[1].to_dict()
         example = examples[random.randint(0, 4)]
@@ -397,9 +398,27 @@ def generative_tagger(data_path, tag_path, api_key):
             tag_count = Counter(res)
             tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
 
-            print(tag_count)
+            candidate_tags = [_[0] for _ in tag_count]
+            candidate_tags_embed = encoder.encode(candidate_tags)
+            candidate_tags_dis = [np.sqrt(np.dot(_, _.T)) for _ in candidate_tags_embed]
+
+            scores = np.dot(candidate_tags_embed, tags_embed.T)
+
+            final_ans = []
+            for i in range(scores.shape[0]):
+                for j in range(scores.shape[1]):
+                    score = scores[i][j] / (candidate_tags_dis[i] * tags_dis[j])
+                    if score > 0.9:
+                        final_ans.append(tags[j])
+
+            final_ans = Counter(final_ans)
+            final_ans = sorted(final_ans.items(), key=lambda x: x[1], reverse=True)
+
+            print(final_ans)
         except:
             print("api error")
+
+
 
     return 0
 
