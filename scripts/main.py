@@ -128,7 +128,7 @@ def posterior_process(data_path):
 
     tags = []
     for tmp in ans:
-        if tmp[1] > 4:
+        if tmp[1] > 0:
             tags.append(tmp[0].replace(' ', ''))
 
     f = open('../data/tags.txt', 'w')
