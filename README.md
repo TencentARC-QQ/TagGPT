@@ -8,7 +8,7 @@ Paper Link: [TagGPT: Large Language Models are Zero-shot Multimodal Taggers](htt
     <img src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" alt="Open in Spaces">
 </a>
 
-## Dependencies
+## 🔧 Dependencies
 
 - Python >= 3.7
 - PyTorch == 2.0.0
@@ -18,7 +18,7 @@ Paper Link: [TagGPT: Large Language Models are Zero-shot Multimodal Taggers](htt
 pip install -r requirements.txt
 ```
 
-## How to use TagGPT
+## 💻 How to use TagGPT
 
 ### Step 1: Tagging system construction
 You need a batch of data to build your tagging system.
