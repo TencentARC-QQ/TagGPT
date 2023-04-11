@@ -135,6 +135,31 @@ def posterior_process(data_path):
     f.write('\n'.join(tags))
     f.close()
 
+    encoder = SentenceTransformer('hfl/chinese-roberta-wwm-ext-large')
+    tags_embed = encoder.encode(tags)
+    tags_dis = [np.sqrt(np.dot(_, _.T)) for _ in tags_embed]
+    mark = [0 for _ in range(len(tags))]
+    include = [[] for _ in range(len(tags))]
+
+    for i in tqdm.trange(len(tags)):
+        if mark[i] == 0:
+            score = np.dot(tags_embed[i], tags_embed[i:].T)
+            for j in range(i, len(tags)):
+                if i != j:
+                    score[j - i] = score[j - i] / (tags_dis[i] * tags_dis[j])
+                    if score[j - i] > 0.8:
+                        mark[j] = 1
+                        include[i].append(tags[j])
+
+    out = ""
+    for i in range(len(tags)):
+        if mark[i] == 0:
+            out += tags[i] + "||" + str(include[i]) + "\n"
+
+    f = open('../data/final_tags.csv', 'w')
+    f.write(out)
+    f.close()
+
 
 class Data:
     def __init__(self, path):
