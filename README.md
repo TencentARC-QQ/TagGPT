@@ -1,12 +1,9 @@
-# TagGPT
-TagGPT is a fully automated system capable of tag extraction and multimodal tagging in a completely zero-shot fashion.
+# TagGPT: Large Language Models are Zero-shot Multimodal Taggers
+TagGPT is a fully automated system capable of tag extraction and multimodal tagging in a completely zero-shot fashion, produced by **QQ-ARC Joint Lab at Tencent PCG**.
 
 
-Paper Link: [TagGPT: Large Language Models are Zero-shot Multimodal Taggers](https://arxiv.org/abs/2304.03022)
+<a href='https://huggingface.co/spaces/TencentARC/TagGPT'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue'></a> <a href='https://arxiv.org/abs/2304.03022'><img src='https://img.shields.io/badge/arXiv-Tech%20Report-Green'></a>
 
-<a src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" href="https://huggingface.co/spaces/TencentARC/TagGPT">
-    <img src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" alt="Open in Spaces">
-</a>
 
 ## 🔧 Dependencies
 
@@ -55,9 +52,18 @@ python main.py --data_path ../data/examples.csv --tag_path ../data/final_tags.cs
 ```
 
 ## 🤗 Acknowledgements
-We appreciate the open source of the following projects: Kuaishou, Hugging Face, LangChain. 
+We appreciate the open source of the following projects: Kuaishou, Hugging Face, LangChain.
+
+## 📖 Citation
+If you find this work useful for your research or applications, please cite our technical report:
+```
+@article{li2023taggpt,
+  title={TagGPT: Large Language Models are Zero-shot Multimodal Taggers},
+  author={Li, Chen and Ge, Yixiao and Mao, Jiayong and Li, Dian and Shan, Ying},
+  journal={arXiv preprint arXiv:2304.03022},
+  year={2023}
+}
+```
 
 ## 📧 Contact Information
 For help or issues using the TagGPT, please submit a GitHub issue.
-
-For other communications, please contact Chen Li [palchenli@tencent.com](palchenli@tencent.com) or Yixiao Ge [yixiaoge@tencent.com](yixiaoge@tencent.com).
